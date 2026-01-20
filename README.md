@@ -1,5 +1,12 @@
 # React + TypeScript + Vite
 
+## Levantar desarrollo
+
+1. Clonar el repositorio
+2. Editar el archivo `.env` con las variables de entorno basado en el archivo `.env.template`
+3. Ejecutar `npm install`
+4. Ejecutar `npm run dev`
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
