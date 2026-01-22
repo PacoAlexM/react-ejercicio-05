@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState/*, useEffect*/ } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { Heart } from "lucide-react"
+import { getHeroesByPageAction } from '@/heroes/actions/get-heroes-by-page.action'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Jumbotron } from '@/components/custom/Jumbotron'
 import { HeroStats } from '@/heroes/components/HeroStats'
@@ -9,6 +11,18 @@ import { CustomBreadcrumb } from '@/components/custom/CustomBreadcrumb'
 
 export const HomePage = () => {
     const [activeTab, setActiveTab] = useState<'all' | 'favorites' | 'heroes' | 'villains'>('all');
+
+    const { data: heroesResonse } = useQuery({
+        queryKey: ['heroes'],
+        queryFn: () => getHeroesByPageAction(),
+        staleTime: (1000 * 60) * 5,
+    });
+
+    // useEffect(() => {
+    //     getHeroesByPage().then((data) => {});
+    // }, []);
+
+    // console.log(heroesResonse);
 
     return (
         <>
@@ -32,7 +46,7 @@ export const HomePage = () => {
                     <TabsTrigger value="villains"onClick={ () => setActiveTab('villains') }>Villanos (2)</TabsTrigger>
                 </TabsList>
                 <TabsContent value="all">
-                    <HeroGrid />
+                    <HeroGrid heroes={ heroesResonse?.heroes } />
                 </TabsContent>
                 <TabsContent value="favorites">
                     <h1>Favoritos</h1>

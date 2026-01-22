@@ -4,21 +4,21 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Brain, Eye, Gauge, Heart, Shield, Zap } from 'lucide-react'
 
-type CharacterType = 'Héroe' | 'Villano' | 'Anti-Héroe';
+// type CharacterType = 'Héroe' | 'Villano' | 'Anti-Héroe';
 
 interface Props {
     active: boolean;
     characterName: string;
     description: string;
     durabilityPoints: number;
-    firstAppeared: number;
+    firstAppeared: string;
     intelligencePoints: number;
     powers: string[];
     realName: string;
     speedPoints: number;
     strengthPoints: number;
     team: string;
-    type: CharacterType;
+    type: string;
     universe: string;
 }
 
