@@ -10,7 +10,7 @@ export const Menu = () => {
     }
 
     return (
-        <NavigationMenu>
+        <NavigationMenu className="py-5">
             <NavigationMenuList>
                 {/* Home */}
                 <NavigationMenuItem>
