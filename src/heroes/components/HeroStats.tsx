@@ -1,34 +1,39 @@
+import { use } from 'react'
 import { useSummary } from '@/heroes/hooks/useSummary'
+import { FavoriteHeroContext } from '@/heroes/context/FavoriteHeroContext'
 import { Badge } from '@/components/ui/badge'
 import { Heart, Trophy, Users, Zap } from 'lucide-react'
 import { HeroStatCard } from './HeroStatCard'
 
 export const HeroStats = () => {
     const { data: summary } = useSummary();
+    const { favoritesCount } = use(FavoriteHeroContext);
+
+    if (!summary) return <h3>Cargando...</h3>;
 
     return (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <HeroStatCard title="Total de Personajes" icon={ <Users className="h-4 w-4 text-muted-foreground" /> }>
-                <div className="text-2xl font-bold">{ summary?.totalHeroes }</div>
+                <div className="text-2xl font-bold">{ summary.totalHeroes }</div>
                 <div className="flex gap-1 mt-2">
-                    <Badge variant="secondary" className="text-xs">{ summary?.heroCount } Héroes</Badge>
-                    <Badge variant="destructive" className="text-xs">{ summary?.villainCount } Villanos</Badge>
+                    <Badge variant="secondary" className="text-xs">{ summary.heroCount } Héroes</Badge>
+                    <Badge variant="destructive" className="text-xs">{ summary.villainCount } Villanos</Badge>
                 </div>
             </HeroStatCard>
 
             <HeroStatCard title="Favoritos" icon={ <Heart className="h-4 w-4 text-muted-foreground" /> }>
-                <div className="text-2xl font-bold text-red-600">3</div>
-                <p className="text-xs text-muted-foreground">18.8% del total</p>
+                <div className="text-2xl font-bold text-red-600">{ favoritesCount }</div>
+                <p className="text-xs text-muted-foreground">{ (favoritesCount * 100) / summary.totalHeroes }% del total</p>
             </HeroStatCard>
 
             <HeroStatCard title="Más Fuerte" icon={ <Zap className="h-4 w-4 text-muted-foreground" /> }>
-                <div className="text-lg font-bold">{ summary?.strongestHero.alias }</div>
-                <p className="text-xs text-muted-foreground">Fuerza: { summary?.strongestHero.strength }/10</p>
+                <div className="text-lg font-bold">{ summary.strongestHero.alias }</div>
+                <p className="text-xs text-muted-foreground">Fuerza: { summary.strongestHero.strength }/10</p>
             </HeroStatCard>
 
             <HeroStatCard title="Más Inteligénte" icon={ <Trophy className="h-4 w-4 text-muted-foreground" /> }>
-                    <div className="text-lg font-bold">{ summary?.smartestHero.alias }</div>
-                    <p className="text-xs text-muted-foreground">Inteligencia: { summary?.smartestHero.intelligence }/10</p>
+                    <div className="text-lg font-bold">{ summary.smartestHero.alias }</div>
+                    <p className="text-xs text-muted-foreground">Inteligencia: { summary.smartestHero.intelligence }/10</p>
             </HeroStatCard>
         </div>
     );
