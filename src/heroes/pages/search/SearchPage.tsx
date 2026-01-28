@@ -1,3 +1,4 @@
+import { HeroGrid } from '@/heroes/components/HeroGrid'
 import { Jumbotron } from '@/components/custom/Jumbotron'
 import { HeroStats } from '@/heroes/components/HeroStats'
 import { SearchControls } from '@/heroes/pages/search/ui/SearchControls'
@@ -16,6 +17,9 @@ export const SearchPage = () => {
 
             {/* Filter and Search */}
             <SearchControls />
+
+            {/* Results */}
+            <HeroGrid heroes={[]} />
         </>
     );
 }
