@@ -1,5 +1,6 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useSearchParams } from 'react-router'
+import type { Hero } from '@/heroes/interfaces/heroe.interface'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Filter, Grid, Plus, Search, SortAsc } from 'lucide-react'
@@ -7,6 +8,7 @@ import { Filter, Grid, Plus, Search, SortAsc } from 'lucide-react'
 export const SearchControls = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const inputRef = useRef<HTMLInputElement>(null);
+    const [heroes, setHeroes] = useState<Hero[]>([]);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {

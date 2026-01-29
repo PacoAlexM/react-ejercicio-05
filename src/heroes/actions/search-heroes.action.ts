@@ -1,3 +1,6 @@
+import { heroApi } from '@/heroes/api/hero.api'
+import type { Hero } from '@/heroes/interfaces/heroe.interface'
+
 interface Options {
     name?: string;
     team?: string;
@@ -7,6 +10,26 @@ interface Options {
     strength?: string;
 }
 
-export const searchHeroesAction = ({name = '', team = '', category = '', universe = '', status = '', strength = ''}: Options) => {
-    
+const VITE_BASE_URL = import.meta.env.VITE_API_URL;
+
+export const searchHeroesAction = async (options: Options = {}): Promise<Hero[]> => {
+    const { name, team, category, universe, status, strength } = options;
+
+    if (!name && !team && !category && !universe && !status && !strength) return [];
+
+    const { data } = await heroApi.get<Hero[]>('/search', {
+        params: {
+            name,
+            team,
+            category,
+            universe,
+            status,
+            strength
+        }
+    });
+
+    return data.map(hero => ({
+        ...hero,
+        image: `${ VITE_BASE_URL }/images/${ hero.image }`,
+    }));
 }

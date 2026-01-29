@@ -1,3 +1,6 @@
+import { useSearchParams } from 'react-router'
+import { useQuery } from '@tanstack/react-query'
+import { searchHeroesAction } from '@/heroes/actions/search-heroes.action'
 import { HeroGrid } from '@/heroes/components/HeroGrid'
 import { Jumbotron } from '@/components/custom/Jumbotron'
 import { HeroStats } from '@/heroes/components/HeroStats'
@@ -5,6 +8,15 @@ import { SearchControls } from '@/heroes/pages/search/ui/SearchControls'
 import { CustomBreadcrumb } from '@/components/custom/CustomBreadcrumb'
 
 export const SearchPage = () => {
+    const [ searchParams ] = useSearchParams();
+    const name = searchParams.get('name') ?? undefined;
+
+    const { data: heroes = [] } = useQuery({
+        queryKey: ['search', { name }],
+        queryFn: () => searchHeroesAction({ name }),
+        staleTime: (1000 * 60) * 5,
+    });
+
     return (
         <>
             <Jumbotron title="Búsqueda de Super Héroes" description="Descubre, explora, y administra tus super héroes y villanos favorítos" />
@@ -19,7 +31,7 @@ export const SearchPage = () => {
             <SearchControls />
 
             {/* Results */}
-            <HeroGrid heroes={[]} />
+            <HeroGrid heroes={ heroes } />
         </>
     );
 }
